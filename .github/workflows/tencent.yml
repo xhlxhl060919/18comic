@@ -66,21 +66,4 @@ jobs:
         tke_region: ${{ env.TKE_REGION }}
         cluster_id: ${{ env.TKE_CLUSTER_ID }}
 
-    - name: Switch to TKE context
-      run: |
-        kubectl config use-context ${TKE_CLUSTER_ID}-context-default
-
-    # Deploy the Docker image to the TKE cluster
-    - name: Deploy
-      run: |
-        ./kustomize edit set image ${TKE_IMAGE_URL}:${GITHUB_SHA}
-        ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/${DEPLOYMENT_NAME}
-        kubectl get services -o wide
-        - name: Download a Build Artifact
-  uses: actions/download-artifact@v2.1.1
-  with:
-    # Artifact name
-    name: # optional
-    # Destination path
-    path: # optional
+   
